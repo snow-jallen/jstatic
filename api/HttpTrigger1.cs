@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
 
 namespace Company.Function
 {
@@ -15,7 +16,7 @@ namespace Company.Function
         [FunctionName("HttpTrigger1")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+            ILogger log, IConfiguration config)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
@@ -27,7 +28,9 @@ namespace Company.Function
 
             string responseMessage = string.IsNullOrEmpty(name)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+                : $"Hello, {name}. This HTTP triggered function executed successfully.  ";
+
+            responseMessage += (config["MY_SETTING"] ?? "config[MY_SETTING] not found");
 
             return new OkObjectResult(responseMessage);
         }
