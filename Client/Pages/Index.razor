@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject HttpClient http
 
 <PageTitle>Index</PageTitle>
 
@@ -10,11 +11,18 @@ Welcome to your new app.
 
 <p>@message</p>
 
-@code{
+@code {
     string message;
 
-    void buttonClick()
+    async Task buttonClick()
     {
-        message = DateTime.Now.ToString();
+        try
+        {
+            message = await http.GetStringAsync("api/HttpTrigger1");
+        }
+        catch (Exception e)
+        {
+            message = e.ToString();
+        }
     }
 }
