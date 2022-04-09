@@ -3,9 +3,10 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Lowercase a in api!</h1>
+<h1>Asks name!</h1>
 
-Welcome to your new app.
+Welcome to your new app.  Enter your name:
+<input @bind=yourName />
 
 <button @onclick=buttonClick>ClickMe!</button>
 
@@ -13,12 +14,13 @@ Welcome to your new app.
 
 @code {
     string message;
+    string yourName;
 
     async Task buttonClick()
     {
         try
         {
-            message = await http.GetStringAsync("api/HttpTrigger1");
+            message = await http.GetStringAsync($"api/HttpTrigger1?name={yourName}");
         }
         catch (Exception e)
         {
