@@ -5,3 +5,16 @@
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<button @onclick=buttonClick>ClickMe!</button>
+
+<p>@message</p>
+
+@code{
+    string message;
+
+    void buttonClick()
+    {
+        message = DateTime.Now.ToString();
+    }
+}
